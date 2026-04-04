@@ -1,0 +1,10 @@
+.github
+node_modules
+test
+dist/*.d.mts
+dist/*.d.cts
+tsconfig.json
+package-lock.json
+*.log
+.DS_Store
+n

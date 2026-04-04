@@ -78,15 +78,14 @@ async function main() {
     console.log(`\n ${colors.bright}${targetDisplay}${colors.reset}`);
 
     // Edition line
-    const editionStr = `${colors.bright}${res.type.toUpperCase()}${colors.reset}`;
-    const versionStr = `${colors.gray}${res.version.name}${colors.reset}`;
-    const latencyStr =
-      res.type === "java"
-        ? ` ${colors.magenta}${res.latency}ms${colors.reset}`
-        : "";
+    const color = res.type === "java" ? colors.cyan : colors.green;
+    const editionStr = `${color}${colors.bright}${res.type.toUpperCase()}${colors.reset}`;
+    const versionStr = `${colors.white}${res.version.name}${colors.reset}`;
+    const protocolStr = `${colors.gray}(${res.version.protocol})${colors.reset}`;
+    const latencyStr = ` ${colors.magenta}${res.latency}ms${colors.reset}`;
 
     console.log(
-      ` ${editionStr} ${colors.gray}•${colors.reset} ${versionStr}${latencyStr}`,
+      ` ${editionStr} ${colors.gray}•${colors.reset} ${versionStr} ${protocolStr} ${colors.gray}•${colors.reset}${latencyStr}`,
     );
 
     // Players line

@@ -1,13 +1,13 @@
 {
   "name": "mcping",
-  "version": "2.0.0-rc.1",
+  "version": "2.0.0",
   "description": "Minecraft server ping library",
   "type": "module",
   "main": "./dist/index.cjs",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.mts",
   "bin": {
-    "mcping": "./dist/cli.mjs"
+    "mcping": "./dist/cli.cjs"
   },
   "exports": {
     ".": {

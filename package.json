@@ -1,5 +1,5 @@
 {
-  "name": "@deitylamb/mcping",
+  "name": "mcping",
   "version": "1.5.1",
   "description": "Minecraft server ping library",
   "type": "module",

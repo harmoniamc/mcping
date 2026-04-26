@@ -1,8 +1,13 @@
-# @deitylamb/mcping
+# mcping
 
 Robust, and well-typed Minecraft server ping library for Node.js. Supports both **Java Edition** (1.7.x - 1.21+) and **Bedrock Edition**.
 
 Also includes a [Modern CLI](#cli-usage) for quick server status checks directly from your terminal.
+
+> **Migrated from `@deitylamb/mcping`** — if you're on the old package, run:
+> ```bash
+> npm install mcping
+> ```
 
 ## Features
 
@@ -18,7 +23,7 @@ Also includes a [Modern CLI](#cli-usage) for quick server status checks directly
 ## Installation
 
 ```bash
-npm install @deitylamb/mcping
+npm install mcping
 ```
 
 ## Usage
@@ -26,7 +31,7 @@ npm install @deitylamb/mcping
 ### Simple Ping (Auto-detect)
 
 ```typescript
-import { ping } from "@deitylamb/mcping";
+import { ping } from "mcping";
 
 const res = await ping("mc.hypixel.net");
 console.log(`${res.players.online}/${res.players.max} players online.`);
@@ -97,14 +102,14 @@ The library includes a Neofetch-inspired command-line interface for quick status
 
 ```bash
 # Using npx
-npx @deitylamb/mcping mc.hypixel.net
+npx mcping mc.hypixel.net
 
 # Options
-npx @deitylamb/mcping mc.hypixel.net --timeout 1000
-npx @deitylamb/mcping play.cubecraft.net --type bedrock
+npx mcping mc.hypixel.net --timeout 1000
+npx mcping play.cubecraft.net --type bedrock
 
 # Or install globally
-npm install -g @deitylamb/mcping
+npm install -g mcping
 mcping mc.hypixel.net
 ```
 

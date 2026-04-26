@@ -4,11 +4,6 @@ Robust, and well-typed Minecraft server ping library for Node.js. Supports both 
 
 Also includes a [Modern CLI](#cli-usage) for quick server status checks directly from your terminal.
 
-> **Migrated from `@deitylamb/mcping`** — if you're on the old package, run:
-> ```bash
-> npm install mcping
-> ```
-
 ## Features
 
 - **Unified API**: One simple function `ping(target, options)` for all protocols.

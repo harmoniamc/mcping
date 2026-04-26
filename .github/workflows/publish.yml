@@ -26,5 +26,10 @@ jobs:
         with:
           generate_release_notes: true
       - name: Publish to NPM
-        run: npm publish --provenance --access public
+        run: |
+          if [[ "$(node -p "require('./package.json').version")" == *"-"* ]]; then
+            npm publish --provenance --access public --tag next
+          else
+            npm publish --provenance --access public
+          fi
         # NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }} is no longer needed with Trusted Publishing

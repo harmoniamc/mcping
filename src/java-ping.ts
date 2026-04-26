@@ -100,7 +100,10 @@ export async function pingJava(
             return;
           }
         } catch (e) {
-          // Return if we can't decode yet
+          if (e instanceof RangeError) return; // partial data, wait for more
+          clearTimeout(timeoutHandler);
+          client.destroy();
+          reject(e);
           return;
         }
       }

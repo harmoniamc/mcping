@@ -26,7 +26,7 @@ export async function pingBedrock(
   return new Promise((resolve, reject) => {
     const client = dgram.createSocket("udp4");
     const timeoutHandler = setTimeout(() => {
-      client.close();
+      try { client.close(); } catch {}
       reject(new Error(`Bedrock ping timed out after ${timeout}ms`));
     }, timeout);
 
@@ -46,7 +46,7 @@ export async function pingBedrock(
       if (msg.readUInt8(0) === 0x1c) {
         // Unconnected Pong (0x1C)
         clearTimeout(timeoutHandler);
-        client.close();
+        try { client.close(); } catch {}
 
         const time = msg.readBigInt64BE(1);
         const serverGUID = msg.readBigInt64BE(9);
@@ -81,7 +81,7 @@ export async function pingBedrock(
 
     client.on("error", (err) => {
       clearTimeout(timeoutHandler);
-      client.close();
+      try { client.close(); } catch {}
       reject(err);
     });
   });

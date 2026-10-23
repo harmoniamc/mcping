@@ -61,7 +61,7 @@ const res = await ping("geo.hivebedrock.network", { type: "bedrock" });
 
 ```typescript
 const res = await ping("example.com", {
-  timeout: 3000, // default: 5000ms
+  timeout: 3000, // per attempt, DNS lookups included (default: 5000ms)
   type: "java", // 'java' | 'bedrock' | null (auto-detect)
 });
 ```

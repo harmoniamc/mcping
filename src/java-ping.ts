@@ -30,7 +30,9 @@ export async function pingJava(
     let response: JavaRawResponse;
 
     const timeoutHandler = setTimeout(() => {
-      client.destroy();
+      try {
+        client.destroy();
+      } catch {}
       reject(new Error(`Connection timed out after ${timeout}ms`));
     }, timeout);
 

@@ -3,8 +3,13 @@ import { pingJava, JavaRawResponse } from "./java-ping.js";
 import { pingBedrock, BedrockRawResponse } from "./bedrock-ping.js";
 import { parseChat } from "./chat.js";
 import * as cache from "./cache.js";
+import { withTimeout, remaining } from "./timeout.js";
 
 export interface PingOptions {
+  /**
+   * Time limit in ms for each protocol attempt, DNS lookups included.
+   * With `type: null` the Java and Bedrock attempts each get this budget.
+   */
   timeout?: number;
   type?: "java" | "bedrock" | null;
   cache?: cache.CacheOptions;
@@ -68,15 +73,15 @@ async function pingServer(
   timeout: number,
   type: "java" | "bedrock" | null,
 ): Promise<PingResponse> {
-  const resolved = await resolveTarget(target, type);
-
   let javaError: any;
   if (type === "java" || type === null) {
     try {
+      const startedAt = Date.now();
+      const resolved = await resolveWithin(target, type, timeout);
       const { response, latency } = await pingJava(
         resolved.host,
         resolved.port,
-        timeout,
+        remaining(startedAt, timeout),
       );
       return {
         type: "java",
@@ -104,12 +109,12 @@ async function pingServer(
   }
 
   try {
-    const bedrockResolved =
-      type === "bedrock" ? resolved : await resolveTarget(target, "bedrock");
+    const startedAt = Date.now();
+    const bedrockResolved = await resolveWithin(target, "bedrock", timeout);
     const response = await pingBedrock(
       bedrockResolved.host,
       bedrockResolved.port,
-      timeout,
+      remaining(startedAt, timeout),
     );
     return {
       type: "bedrock",
@@ -140,4 +145,16 @@ async function pingServer(
     }
     throw bedrockErr;
   }
+}
+
+function resolveWithin(
+  target: string,
+  type: "java" | "bedrock" | null,
+  timeout: number,
+) {
+  return withTimeout(
+    resolveTarget(target, type),
+    timeout,
+    `DNS resolution timed out after ${timeout}ms`,
+  );
 }
